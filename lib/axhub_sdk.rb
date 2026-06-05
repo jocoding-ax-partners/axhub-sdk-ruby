@@ -4,6 +4,7 @@ require 'net/http'
 require 'securerandom'
 require 'time'
 require 'uri'
+require_relative 'axhub_sdk/version'
 
 module AxHub
   DEFAULT_BASE_URL = 'https://api.axhub.ai'
