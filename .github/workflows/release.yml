@@ -39,7 +39,7 @@ jobs:
           v=$(ruby -e "puts Gem::Specification.load('axhub-sdk.gemspec').version")
           [ "$GITHUB_REF_NAME" = "v$v" ] || { echo "tag != v$v"; exit 1; }
       - name: Test before publish
-        run: ruby test/regression_test.rb && ruby test/conformance_test.rb && ruby test/operations_test.rb
+        run: ruby test/regression_test.rb && ruby test/conformance_test.rb && ruby test/operations_test.rb && ruby test/all_operations_e2e_test.rb
       - name: Build gem before publish
         run: |
           mkdir -p dist
