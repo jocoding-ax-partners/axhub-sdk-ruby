@@ -5,25 +5,23 @@ on:
     tags: ['v*']
 
 permissions:
-  contents: write
+  contents: read
   actions: read
-  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    environment: rubygems
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # actions/checkout v4
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # actions/checkout v5
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: ruby/setup-ruby@e5517072e87f198d9533967ae13d97c11b604005 # ruby/setup-ruby v1.99.0
+      - uses: ruby/setup-ruby@afeafc3d1ab54a631816aba4c914a0081c12ff2f # ruby/setup-ruby v1.310.0
         with:
           ruby-version: '3.3'
       - name: Verify tag commit is on main
@@ -39,28 +37,55 @@ jobs:
       - name: Verify release tag matches gem version
         run: |
           v=$(ruby -e "puts Gem::Specification.load('axhub-sdk.gemspec').version")
-          [ "${{ github.ref_name }}" = "v$v" ] || { echo "tag != v$v"; exit 1; }
+          [ "$GITHUB_REF_NAME" = "v$v" ] || { echo "tag != v$v"; exit 1; }
       - name: Test before publish
         run: ruby test/regression_test.rb && ruby test/conformance_test.rb && ruby test/operations_test.rb
       - name: Build gem before publish
-        run: gem build axhub-sdk.gemspec
-      - uses: rubygems/release-gem@6317d8d1f7e28c24d28f6eff169ea854948bd9f7 # rubygems/release-gem v1.2.0
+        run: |
+          mkdir -p dist
+          gem build axhub-sdk.gemspec --output dist/axhub-sdk.gem
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # actions/upload-artifact v5
+        with:
+          name: ruby-gem
+          path: dist/*.gem
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: rubygems
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # actions/download-artifact v5
+        with:
+          name: ruby-gem
+          path: dist
+      - uses: rubygems/configure-rubygems-credentials@bc6dd217f8a4f919d6835fcfefd470ef821f5c44 # rubygems/configure-rubygems-credentials v1.0.0
+      - name: Push gem with trusted publisher credentials
+        run: gem push dist/*.gem
 
   smoke:
     needs: publish
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: ruby/setup-ruby@e5517072e87f198d9533967ae13d97c11b604005 # ruby/setup-ruby v1.99.0
+      - uses: ruby/setup-ruby@afeafc3d1ab54a631816aba4c914a0081c12ff2f # ruby/setup-ruby v1.310.0
         with:
           ruby-version: '3.3'
       - name: Install and require published gem
         run: |
           set -eux
-          version="${{ github.ref_name }}"
+          version="$GITHUB_REF_NAME"
           version="${version#v}"
           for i in $(seq 1 10); do
-            gem install axhub-sdk -v "$version" --no-document && break
+            if gem install axhub-sdk -v "$version" --no-document; then
+              break
+            fi
+            echo "RubyGems package not ready yet (attempt $i/10); retrying"
             sleep 30
           done
           ruby -e "require 'axhub_sdk'; puts AxHub::DEFAULT_BASE_URL"

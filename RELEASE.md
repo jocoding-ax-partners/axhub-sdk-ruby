@@ -28,3 +28,9 @@ This SDK uses tag-triggered GitHub Actions releases. Do not create a `v*` tag un
 - If a publish step fails, delete only local scratch artifacts; do not retag a different commit with the same version.
 - If a smoke job fails after publish, inspect registry visibility first. For Maven Central, wait for propagation and rerun the smoke job only after confirming the POM URL is available.
 - If Kotlin fails its Java preflight, publish/sync the Java SDK version first, then rerun Kotlin from the same tag once the Java POM is visible.
+
+## Workflow hardening
+
+- CI and release actions are pinned to full commit SHAs.
+- Release workflows separate verification/build work from registry or repository-write publishing credentials.
+- Checkout steps use `persist-credentials: false` unless a publish action explicitly requires a token.
