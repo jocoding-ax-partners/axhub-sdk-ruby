@@ -1,0 +1,46 @@
+{
+  "name": "gateway.gatewayGetApiV1Engines returns camelized response",
+  "client": {
+    "tokenType": "pat",
+    "token": "pat_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "gatewayGetApiV1Engines",
+    "context": "gateway",
+    "method": "gateway_get_api_v1_engines",
+    "pathParams": {},
+    "query": {},
+    "body": null
+  },
+  "httpExpect": {
+    "method": "GET",
+    "path": "/api/v1/engines",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "x-api-key": "pat_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "gatewayGetApiV1Engines",
+      "context_name": "gateway",
+      "result_id": "ok_gateway",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "gatewayGetApiV1Engines",
+      "contextName": "gateway",
+      "resultId": "ok_gateway"
+    }
+  }
+}

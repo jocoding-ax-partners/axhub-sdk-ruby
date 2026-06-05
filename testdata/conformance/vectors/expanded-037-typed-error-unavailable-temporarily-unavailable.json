@@ -1,0 +1,47 @@
+{
+  "name": "typed error unavailable/temporarily_unavailable",
+  "client": {
+    "tokenType": "jwt",
+    "token": "jwt_x",
+    "defaultTenantId": "tnt_1"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "appsGetApiV1AppsDiscover",
+    "context": "apps",
+    "method": "apps_get_api_v1_apps_discover",
+    "pathParams": {},
+    "query": {},
+    "body": null
+  },
+  "httpExpect": {
+    "method": "GET",
+    "path": "/api/v1/apps/discover",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "authorization": "Bearer jwt_x"
+    }
+  },
+  "mockResponse": {
+    "status": 429,
+    "body": {
+      "error": {
+        "category": "unavailable",
+        "code": "temporarily_unavailable",
+        "message": "temporarily_unavailable message",
+        "retryable": true,
+        "request_id": "req_temporarily_unavailable"
+      }
+    }
+  },
+  "expect": {
+    "error": {
+      "category": "unavailable",
+      "code": "temporarily_unavailable",
+      "requestId": "req_temporarily_unavailable",
+      "retryable": true
+    }
+  }
+}

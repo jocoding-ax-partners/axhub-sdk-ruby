@@ -1,0 +1,49 @@
+{
+  "name": "tenants.tenantsPostApiV1Tenants returns camelized response",
+  "client": {
+    "tokenType": "pat",
+    "token": "pat_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "tenantsPostApiV1Tenants",
+    "context": "tenants",
+    "method": "tenants_post_api_v1_tenants",
+    "pathParams": {},
+    "query": {},
+    "body": {
+      "name": "Vector Example",
+      "slug": "vector-example"
+    }
+  },
+  "httpExpect": {
+    "method": "POST",
+    "path": "/api/v1/tenants",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "x-api-key": "pat_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "tenantsPostApiV1Tenants",
+      "context_name": "tenants",
+      "result_id": "ok_tenants",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "tenantsPostApiV1Tenants",
+      "contextName": "tenants",
+      "resultId": "ok_tenants"
+    }
+  }
+}

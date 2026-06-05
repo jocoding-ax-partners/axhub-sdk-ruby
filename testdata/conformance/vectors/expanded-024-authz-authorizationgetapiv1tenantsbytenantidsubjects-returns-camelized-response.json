@@ -1,0 +1,48 @@
+{
+  "name": "authz.authorizationGetApiV1TenantsByTenantIDSubjects returns camelized response",
+  "client": {
+    "tokenType": "pat",
+    "token": "pat_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "authorizationGetApiV1TenantsByTenantIDSubjects",
+    "context": "authz",
+    "method": "authorization_get_api_v1_tenants_by_tenant_id_subjects",
+    "pathParams": {
+      "tenantID": "tnt_1"
+    },
+    "query": {},
+    "body": null
+  },
+  "httpExpect": {
+    "method": "GET",
+    "path": "/api/v1/tenants/tnt_1/subjects",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "x-api-key": "pat_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "authorizationGetApiV1TenantsByTenantIDSubjects",
+      "context_name": "authz",
+      "result_id": "ok_authz",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "authorizationGetApiV1TenantsByTenantIDSubjects",
+      "contextName": "authz",
+      "resultId": "ok_authz"
+    }
+  }
+}

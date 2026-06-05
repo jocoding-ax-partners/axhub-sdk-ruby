@@ -1,0 +1,48 @@
+{
+  "name": "tenants.tenantsGetApiV1TenantsByTenantID returns camelized response",
+  "client": {
+    "tokenType": "jwt",
+    "token": "jwt_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "tenantsGetApiV1TenantsByTenantID",
+    "context": "tenants",
+    "method": "tenants_get_api_v1_tenants_by_tenant_id",
+    "pathParams": {
+      "tenantID": "tnt_1"
+    },
+    "query": {},
+    "body": null
+  },
+  "httpExpect": {
+    "method": "GET",
+    "path": "/api/v1/tenants/tnt_1",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "authorization": "Bearer jwt_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "tenantsGetApiV1TenantsByTenantID",
+      "context_name": "tenants",
+      "result_id": "ok_tenants",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "tenantsGetApiV1TenantsByTenantID",
+      "contextName": "tenants",
+      "resultId": "ok_tenants"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "identity.authPostOauthToken returns camelized response",
+  "client": {
+    "tokenType": "pat",
+    "token": "pat_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "authPostOauthToken",
+    "context": "identity",
+    "method": "auth_post_oauth_token",
+    "pathParams": {},
+    "query": {},
+    "body": {
+      "name": "Vector Example",
+      "slug": "vector-example"
+    }
+  },
+  "httpExpect": {
+    "method": "POST",
+    "path": "/oauth/token",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "x-api-key": "pat_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "authPostOauthToken",
+      "context_name": "identity",
+      "result_id": "ok_identity",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "authPostOauthToken",
+      "contextName": "identity",
+      "resultId": "ok_identity"
+    }
+  }
+}

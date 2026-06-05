@@ -1,0 +1,46 @@
+{
+  "name": "gateway.configGetConfigPublic returns camelized response",
+  "client": {
+    "tokenType": "jwt",
+    "token": "jwt_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "configGetConfigPublic",
+    "context": "gateway",
+    "method": "config_get_config_public",
+    "pathParams": {},
+    "query": {},
+    "body": null
+  },
+  "httpExpect": {
+    "method": "GET",
+    "path": "/config/public",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "authorization": "Bearer jwt_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "configGetConfigPublic",
+      "context_name": "gateway",
+      "result_id": "ok_gateway",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "configGetConfigPublic",
+      "contextName": "gateway",
+      "resultId": "ok_gateway"
+    }
+  }
+}

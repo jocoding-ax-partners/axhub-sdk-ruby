@@ -1,0 +1,51 @@
+{
+  "name": "gateway.gatewayPostApiV1TenantsByTenantIDGatewayQuery returns camelized response",
+  "client": {
+    "tokenType": "pat",
+    "token": "pat_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "gatewayPostApiV1TenantsByTenantIDGatewayQuery",
+    "context": "gateway",
+    "method": "gateway_post_api_v1_tenants_by_tenant_id_gateway_query",
+    "pathParams": {
+      "tenantID": "tnt_1"
+    },
+    "query": {},
+    "body": {
+      "name": "Vector Example",
+      "slug": "vector-example"
+    }
+  },
+  "httpExpect": {
+    "method": "POST",
+    "path": "/api/v1/tenants/tnt_1/gateway/query",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "x-api-key": "pat_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "gatewayPostApiV1TenantsByTenantIDGatewayQuery",
+      "context_name": "gateway",
+      "result_id": "ok_gateway",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "gatewayPostApiV1TenantsByTenantIDGatewayQuery",
+      "contextName": "gateway",
+      "resultId": "ok_gateway"
+    }
+  }
+}
