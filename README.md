@@ -8,6 +8,10 @@ This SDK exposes generated AX Hub API route metadata, typed error metadata, boun
 
 See `.github/workflows/ci.yml` for the canonical CI commands.
 
+## Release
+
+See `RELEASE.md` for tag order, environment approvals, registry prerequisites, and smoke-test handling.
+
 ## License
 
 Apache-2.0.
