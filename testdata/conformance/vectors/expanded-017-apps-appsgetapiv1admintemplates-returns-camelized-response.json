@@ -1,0 +1,46 @@
+{
+  "name": "apps.appsGetApiV1AdminTemplates returns camelized response",
+  "client": {
+    "tokenType": "jwt",
+    "token": "jwt_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "appsGetApiV1AdminTemplates",
+    "context": "apps",
+    "method": "apps_get_api_v1_admin_templates",
+    "pathParams": {},
+    "query": {},
+    "body": null
+  },
+  "httpExpect": {
+    "method": "GET",
+    "path": "/api/v1/admin/templates",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "authorization": "Bearer jwt_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "appsGetApiV1AdminTemplates",
+      "context_name": "apps",
+      "result_id": "ok_apps",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "appsGetApiV1AdminTemplates",
+      "contextName": "apps",
+      "resultId": "ok_apps"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "name": "typed error validation/required",
+  "client": {
+    "tokenType": "jwt",
+    "token": "jwt_x",
+    "defaultTenantId": "tnt_1"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "appsGetApiV1AppsDiscover",
+    "context": "apps",
+    "method": "apps_get_api_v1_apps_discover",
+    "pathParams": {},
+    "query": {},
+    "body": null
+  },
+  "httpExpect": {
+    "method": "GET",
+    "path": "/api/v1/apps/discover",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "authorization": "Bearer jwt_x"
+    }
+  },
+  "mockResponse": {
+    "status": 400,
+    "body": {
+      "error": {
+        "category": "validation",
+        "code": "required",
+        "message": "required message",
+        "retryable": false,
+        "request_id": "req_required"
+      }
+    }
+  },
+  "expect": {
+    "error": {
+      "category": "validation",
+      "code": "required",
+      "requestId": "req_required",
+      "retryable": false
+    }
+  }
+}

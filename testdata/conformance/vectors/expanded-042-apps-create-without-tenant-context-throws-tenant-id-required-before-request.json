@@ -1,0 +1,22 @@
+{
+  "name": "apps.create without tenant context throws tenant_id_required before request",
+  "client": {
+    "tokenType": "pat",
+    "token": "pat_x"
+  },
+  "call": {
+    "symbol": "sdk.apps.create",
+    "args": {
+      "slug": "my-app",
+      "name": "My App"
+    }
+  },
+  "httpExpect": null,
+  "mockResponse": null,
+  "expect": {
+    "error": {
+      "category": "tenant_id_required",
+      "code": "tenant_id_required"
+    }
+  }
+}

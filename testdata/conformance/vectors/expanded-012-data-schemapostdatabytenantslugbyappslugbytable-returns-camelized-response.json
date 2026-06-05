@@ -1,0 +1,53 @@
+{
+  "name": "data.schemaPostDataByTenantSlugByAppSlugByTable returns camelized response",
+  "client": {
+    "tokenType": "pat",
+    "token": "pat_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "schemaPostDataByTenantSlugByAppSlugByTable",
+    "context": "data",
+    "method": "schema_post_data_by_tenant_slug_by_app_slug_by_table",
+    "pathParams": {
+      "tenantSlug": "acme",
+      "appSlug": "portal",
+      "table": "contacts"
+    },
+    "query": {},
+    "body": {
+      "name": "Vector Example",
+      "slug": "vector-example"
+    }
+  },
+  "httpExpect": {
+    "method": "POST",
+    "path": "/data/acme/portal/contacts",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "x-api-key": "pat_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "schemaPostDataByTenantSlugByAppSlugByTable",
+      "context_name": "data",
+      "result_id": "ok_data",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "schemaPostDataByTenantSlugByAppSlugByTable",
+      "contextName": "data",
+      "resultId": "ok_data"
+    }
+  }
+}

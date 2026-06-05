@@ -1,0 +1,51 @@
+{
+  "name": "audit.auditPostApiV1TenantsByTenantIDAuditEventsAnonymize returns camelized response",
+  "client": {
+    "tokenType": "pat",
+    "token": "pat_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "auditPostApiV1TenantsByTenantIDAuditEventsAnonymize",
+    "context": "audit",
+    "method": "audit_post_api_v1_tenants_by_tenant_id_audit_events_anonymize",
+    "pathParams": {
+      "tenantID": "tnt_1"
+    },
+    "query": {},
+    "body": {
+      "name": "Vector Example",
+      "slug": "vector-example"
+    }
+  },
+  "httpExpect": {
+    "method": "POST",
+    "path": "/api/v1/tenants/tnt_1/audit-events/anonymize",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "x-api-key": "pat_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "auditPostApiV1TenantsByTenantIDAuditEventsAnonymize",
+      "context_name": "audit",
+      "result_id": "ok_audit",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "auditPostApiV1TenantsByTenantIDAuditEventsAnonymize",
+      "contextName": "audit",
+      "resultId": "ok_audit"
+    }
+  }
+}

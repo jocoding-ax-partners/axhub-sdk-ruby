@@ -1,0 +1,52 @@
+{
+  "name": "deployments.deployPostApiV1AppsByAppIDDeploymentsByDidCancel returns camelized response",
+  "client": {
+    "tokenType": "pat",
+    "token": "pat_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "deployPostApiV1AppsByAppIDDeploymentsByDidCancel",
+    "context": "deployments",
+    "method": "deploy_post_api_v1_apps_by_app_id_deployments_by_did_cancel",
+    "pathParams": {
+      "appID": "app_1",
+      "did": "dep_1"
+    },
+    "query": {},
+    "body": {
+      "name": "Vector Example",
+      "slug": "vector-example"
+    }
+  },
+  "httpExpect": {
+    "method": "POST",
+    "path": "/api/v1/apps/app_1/deployments/dep_1/cancel",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "x-api-key": "pat_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "deployPostApiV1AppsByAppIDDeploymentsByDidCancel",
+      "context_name": "deployments",
+      "result_id": "ok_deployments",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "deployPostApiV1AppsByAppIDDeploymentsByDidCancel",
+      "contextName": "deployments",
+      "resultId": "ok_deployments"
+    }
+  }
+}

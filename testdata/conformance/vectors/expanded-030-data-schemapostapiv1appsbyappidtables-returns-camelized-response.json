@@ -1,0 +1,51 @@
+{
+  "name": "data.schemaPostApiV1AppsByAppIDTables returns camelized response",
+  "client": {
+    "tokenType": "pat",
+    "token": "pat_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "schemaPostApiV1AppsByAppIDTables",
+    "context": "data",
+    "method": "schema_post_api_v1_apps_by_app_id_tables",
+    "pathParams": {
+      "appID": "app_1"
+    },
+    "query": {},
+    "body": {
+      "name": "Vector Example",
+      "slug": "vector-example"
+    }
+  },
+  "httpExpect": {
+    "method": "POST",
+    "path": "/api/v1/apps/app_1/tables",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "x-api-key": "pat_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "schemaPostApiV1AppsByAppIDTables",
+      "context_name": "data",
+      "result_id": "ok_data",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "schemaPostApiV1AppsByAppIDTables",
+      "contextName": "data",
+      "resultId": "ok_data"
+    }
+  }
+}

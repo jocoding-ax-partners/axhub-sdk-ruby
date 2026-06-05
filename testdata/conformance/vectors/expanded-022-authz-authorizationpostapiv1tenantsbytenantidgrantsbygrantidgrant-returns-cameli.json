@@ -1,0 +1,52 @@
+{
+  "name": "authz.authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDGrant returns camelized response",
+  "client": {
+    "tokenType": "pat",
+    "token": "pat_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDGrant",
+    "context": "authz",
+    "method": "authorization_post_api_v1_tenants_by_tenant_id_grants_by_grant_id_grant",
+    "pathParams": {
+      "tenantID": "tnt_1",
+      "grantID": "grt_1"
+    },
+    "query": {},
+    "body": {
+      "name": "Vector Example",
+      "slug": "vector-example"
+    }
+  },
+  "httpExpect": {
+    "method": "POST",
+    "path": "/api/v1/tenants/tnt_1/grants/grt_1/grant",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "x-api-key": "pat_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDGrant",
+      "context_name": "authz",
+      "result_id": "ok_authz",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDGrant",
+      "contextName": "authz",
+      "resultId": "ok_authz"
+    }
+  }
+}

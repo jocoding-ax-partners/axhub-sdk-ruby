@@ -1,0 +1,47 @@
+{
+  "name": "typed error precondition_failed/precondition_failed",
+  "client": {
+    "tokenType": "jwt",
+    "token": "jwt_x",
+    "defaultTenantId": "tnt_1"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "appsGetApiV1AppsDiscover",
+    "context": "apps",
+    "method": "apps_get_api_v1_apps_discover",
+    "pathParams": {},
+    "query": {},
+    "body": null
+  },
+  "httpExpect": {
+    "method": "GET",
+    "path": "/api/v1/apps/discover",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "authorization": "Bearer jwt_x"
+    }
+  },
+  "mockResponse": {
+    "status": 412,
+    "body": {
+      "error": {
+        "category": "precondition_failed",
+        "code": "precondition_failed",
+        "message": "precondition_failed message",
+        "retryable": false,
+        "request_id": "req_precondition_failed"
+      }
+    }
+  },
+  "expect": {
+    "error": {
+      "category": "precondition_failed",
+      "code": "precondition_failed",
+      "requestId": "req_precondition_failed",
+      "retryable": false
+    }
+  }
+}

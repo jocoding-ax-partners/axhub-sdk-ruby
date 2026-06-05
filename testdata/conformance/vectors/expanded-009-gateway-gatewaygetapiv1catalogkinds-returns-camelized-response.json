@@ -1,0 +1,46 @@
+{
+  "name": "gateway.gatewayGetApiV1CatalogKinds returns camelized response",
+  "client": {
+    "tokenType": "jwt",
+    "token": "jwt_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "gatewayGetApiV1CatalogKinds",
+    "context": "gateway",
+    "method": "gateway_get_api_v1_catalog_kinds",
+    "pathParams": {},
+    "query": {},
+    "body": null
+  },
+  "httpExpect": {
+    "method": "GET",
+    "path": "/api/v1/catalog/kinds",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "authorization": "Bearer jwt_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "gatewayGetApiV1CatalogKinds",
+      "context_name": "gateway",
+      "result_id": "ok_gateway",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "gatewayGetApiV1CatalogKinds",
+      "contextName": "gateway",
+      "resultId": "ok_gateway"
+    }
+  }
+}

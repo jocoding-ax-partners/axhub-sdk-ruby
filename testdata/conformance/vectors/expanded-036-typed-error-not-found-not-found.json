@@ -1,0 +1,47 @@
+{
+  "name": "typed error not_found/not_found",
+  "client": {
+    "tokenType": "jwt",
+    "token": "jwt_x",
+    "defaultTenantId": "tnt_1"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "appsGetApiV1AppsDiscover",
+    "context": "apps",
+    "method": "apps_get_api_v1_apps_discover",
+    "pathParams": {},
+    "query": {},
+    "body": null
+  },
+  "httpExpect": {
+    "method": "GET",
+    "path": "/api/v1/apps/discover",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "authorization": "Bearer jwt_x"
+    }
+  },
+  "mockResponse": {
+    "status": 404,
+    "body": {
+      "error": {
+        "category": "not_found",
+        "code": "not_found",
+        "message": "not_found message",
+        "retryable": false,
+        "request_id": "req_not_found"
+      }
+    }
+  },
+  "expect": {
+    "error": {
+      "category": "not_found",
+      "code": "not_found",
+      "requestId": "req_not_found",
+      "retryable": false
+    }
+  }
+}
