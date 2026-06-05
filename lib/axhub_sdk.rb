@@ -251,8 +251,8 @@ module AxHub
   end
   class Client
     attr_reader :base_url, :apps
-    def initialize(base_url: DEFAULT_BASE_URL, token: nil, token_type: nil, default_tenant_id: nil, default_tenant_slug: nil)
-      @base_url = base_url.sub(%r{/$}, ''); @token = token; @token_type = token_type&.to_sym; @default_tenant_id = default_tenant_id; @default_tenant_slug = default_tenant_slug; @apps = AppsClient.new(self)
+    def initialize(base_url: DEFAULT_BASE_URL, token: nil, token_type: nil, default_tenant_id: nil, default_tenant_slug: nil, timeout_seconds: 10)
+      @base_url = base_url.sub(%r{/$}, ''); @token = token; @token_type = token_type&.to_sym; @default_tenant_id = default_tenant_id; @default_tenant_slug = default_tenant_slug; @timeout_seconds = timeout_seconds; @apps = AppsClient.new(self)
     end
     def redacted_token
       @token.nil? || @token.empty? ? '' : '***REDACTED***'
@@ -269,10 +269,26 @@ module AxHub
         else raise Error.new(category: 'validation', code: 'required', message: 'tokenType must be explicit')
         end
       end
-      res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') { |http| http.request(req) }
-      parsed = res.body && !res.body.empty? ? JSON.parse(res.body) : {}
+      begin
+        res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https', open_timeout: @timeout_seconds, read_timeout: @timeout_seconds) { |http| http.request(req) }
+      rescue Timeout::Error, IOError, SocketError, SystemCallError => e
+        raise Error.new(category: 'network', code: 'network_error', message: e.message, retryable: true)
+      end
+      parsed = if res.body && !res.body.empty?
+                 begin
+                   JSON.parse(res.body)
+                 rescue JSON::ParserError
+                   { 'raw' => res.body }
+                 end
+               else
+                 {}
+               end
       if res.code.to_i >= 400
-        err = parsed['error'] || {}; info = ERROR_CODES[err['code']]; retryable = err.key?('retryable') ? !!err['retryable'] : !!info&.retryable; raise Error.new(category: err['category'] || info&.category || 'unknown', code: err['code'] || "http_#{res.code}", message: err['message'], status: res.code.to_i, retryable: retryable, request_id: err['request_id'] || err['requestId'])
+        err = parsed.is_a?(Hash) ? (parsed['error'] || parsed) : {}
+        err = {} unless err.is_a?(Hash)
+        info = ERROR_CODES[err['code']]
+        retryable = err.key?('retryable') ? !!err['retryable'] : !!info&.retryable
+        raise Error.new(category: err['category'] || info&.category || 'unknown', code: err['code'] || "http_#{res.code}", message: err['message'], status: res.code.to_i, retryable: retryable, request_id: err['request_id'] || err['requestId'])
       end
       AxHub.camelize(parsed)
     end

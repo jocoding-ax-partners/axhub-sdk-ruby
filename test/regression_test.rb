@@ -70,3 +70,32 @@ error_thread.join
 error_server.close
 %w[apps identity tenants authz audit gateway data deployments].each { |name| Assert.ok(!AxHub::CONTEXT_ROUTES[name].empty?, "context routes #{name}") }
 puts 'ruby error metadata and context ok'
+
+non_json_server = TCPServer.new('127.0.0.1', 0)
+non_json_port = non_json_server.addr[1]
+non_json_thread = Thread.new do
+  2.times do
+    socket = non_json_server.accept
+    request = socket.readpartial(4096)
+    path = request.lines.first.split[1]
+    if path.start_with?('/auth/google_oauth2/start')
+      body = '<html>oauth redirect target</html>'
+      socket.write "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: #{body.bytesize}\r\n\r\n#{body}"
+    else
+      body = '"invalid_request"'
+      socket.write "HTTP/1.1 400 Bad Request\r\nContent-Type: application/json\r\nContent-Length: #{body.bytesize}\r\n\r\n#{body}"
+    end
+    socket.close
+  end
+end
+non_json_client = AxHub::Client.new(base_url: "http://127.0.0.1:#{non_json_port}")
+Assert.eq(non_json_client.request('authGetAuthGoogleOauth2Start')['raw'], '<html>oauth redirect target</html>', 'non-json success raw')
+begin
+  non_json_client.request('authPostOauthToken', body: { noop: true })
+  raise 'expected scalar error body error'
+rescue AxHub::Error => e
+  Assert.eq([e.status, e.code], [400, 'http_400'], 'scalar error body')
+end
+non_json_thread.join
+non_json_server.close
+puts 'ruby non-json response handling ok'
