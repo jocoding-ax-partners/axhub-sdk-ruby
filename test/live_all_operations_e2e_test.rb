@@ -75,7 +75,7 @@ def body_for(route)
   { sdk_e2e: true, operation_id: route['operationId'] }
 end
 
-raise "route coverage drift #{AxHub::ROUTES.size}" unless AxHub::ROUTES.size == 177
+raise "route coverage drift #{AxHub::ROUTES.size}" unless AxHub::ROUTES.size == 189
 raise 'operation metadata drift' unless AxHub::OPERATION_METHODS.size == AxHub::ROUTES.size
 
 client = AxHub::Client.new(base_url: BASE_URL, token: TOKEN, token_type: :pat, default_tenant_id: TENANT_ID, default_tenant_slug: TENANT_SLUG, timeout_seconds: LIVE_CALL_TIMEOUT)
@@ -102,6 +102,7 @@ contexts = {
   'authz' => client.authz,
   'audit' => client.audit,
   'gateway' => client.gateway,
+  'cost' => client.cost,
   'data' => client.data,
   'deployments' => client.deployments
 }
@@ -159,8 +160,9 @@ if ENV['AXHUB_LIVE_RESULT_PATH']
   end
 end
 
-raise "total drift #{summary[:total]}" unless summary[:total] == 177
-raise "destructive method count drift #{summary[:destructive]}" unless summary[:destructive] == 97
+raise "total drift #{summary[:total]}" unless summary[:total] == 189
+expected_destructive = AxHub::ROUTES.count { |route| route['method'] != 'GET' }
+raise "destructive method count drift #{summary[:destructive]} != #{expected_destructive}" unless summary[:destructive] == expected_destructive
 raise "exceptions: #{summary[:exceptions].inspect}" unless summary[:exceptions].empty?
 raise "server errors: #{summary[:server_errors].inspect}" unless summary[:server_errors].empty?
 

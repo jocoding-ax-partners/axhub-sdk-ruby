@@ -1,5 +1,5 @@
 {
-  "name": "gateway.gatewayGetApiV1Engines returns camelized response",
+  "name": "identity.authGetWellKnownJwksJson returns camelized response",
   "client": {
     "tokenType": "pat",
     "token": "pat_x",
@@ -8,16 +8,16 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "gatewayGetApiV1Engines",
-    "context": "gateway",
-    "method": "gateway_get_api_v1_engines",
+    "operationId": "authGetWellKnownJwksJson",
+    "context": "identity",
+    "method": "auth_get_well_known_jwks_json",
     "pathParams": {},
     "query": {},
     "body": null
   },
   "httpExpect": {
     "method": "GET",
-    "path": "/api/v1/engines",
+    "path": "/.well-known/jwks.json",
     "headersInclude": [
       "x-request-id"
     ],
@@ -28,9 +28,9 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "gatewayGetApiV1Engines",
-      "context_name": "gateway",
-      "result_id": "ok_gateway",
+      "operation_id": "authGetWellKnownJwksJson",
+      "context_name": "identity",
+      "result_id": "ok_identity",
       "nested_value": {
         "inner_key": "inner"
       }
@@ -38,9 +38,9 @@
   },
   "expect": {
     "ok": {
-      "operationId": "gatewayGetApiV1Engines",
-      "contextName": "gateway",
-      "resultId": "ok_gateway"
+      "operationId": "authGetWellKnownJwksJson",
+      "contextName": "identity",
+      "resultId": "ok_identity"
     }
   }
 }

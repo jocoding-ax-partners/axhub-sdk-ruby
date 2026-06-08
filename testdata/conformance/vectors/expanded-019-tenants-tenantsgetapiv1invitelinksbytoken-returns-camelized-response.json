@@ -1,5 +1,5 @@
 {
-  "name": "data.schemaGetApiV1AppsByAppIDTables returns camelized response",
+  "name": "tenants.tenantsGetApiV1InviteLinksByToken returns camelized response",
   "client": {
     "tokenType": "jwt",
     "token": "jwt_x",
@@ -8,18 +8,18 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "schemaGetApiV1AppsByAppIDTables",
-    "context": "data",
-    "method": "schema_get_api_v1_apps_by_app_id_tables",
+    "operationId": "tenantsGetApiV1InviteLinksByToken",
+    "context": "tenants",
+    "method": "tenants_get_api_v1_invite_links_by_token",
     "pathParams": {
-      "appID": "app_1"
+      "token": "invite_token_1"
     },
     "query": {},
     "body": null
   },
   "httpExpect": {
     "method": "GET",
-    "path": "/api/v1/apps/app_1/tables",
+    "path": "/api/v1/invite-links/invite_token_1",
     "headersInclude": [
       "x-request-id"
     ],
@@ -30,9 +30,9 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "schemaGetApiV1AppsByAppIDTables",
-      "context_name": "data",
-      "result_id": "ok_data",
+      "operation_id": "tenantsGetApiV1InviteLinksByToken",
+      "context_name": "tenants",
+      "result_id": "ok_tenants",
       "nested_value": {
         "inner_key": "inner"
       }
@@ -40,9 +40,9 @@
   },
   "expect": {
     "ok": {
-      "operationId": "schemaGetApiV1AppsByAppIDTables",
-      "contextName": "data",
-      "resultId": "ok_data"
+      "operationId": "tenantsGetApiV1InviteLinksByToken",
+      "contextName": "tenants",
+      "resultId": "ok_tenants"
     }
   }
 }

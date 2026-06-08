@@ -2,6 +2,7 @@
 $LOAD_PATH.unshift(File.expand_path('../lib', __dir__))
 require 'json'
 require 'socket'
+require 'uri'
 require 'axhub_sdk'
 
 module Assert
@@ -42,8 +43,8 @@ begin
 rescue AxHub::Error => e
   Assert.eq([e.category, e.code], ['tenant_id_required', 'tenant_id_required'], 'tenant error')
 end
-Assert.eq(AxHub::ROUTES.size, 177, 'route coverage')
-Assert.eq(AxHub::ERROR_CODES.size, 42, 'error coverage')
+Assert.eq(AxHub::ROUTES.size, 189, 'route coverage')
+Assert.eq(AxHub::ERROR_CODES.size, 43, 'error coverage')
 Assert.eq(AxHub::ERROR_CODES['slug_taken'].category, 'conflict', 'slug_taken category')
 puts 'ruby regression ok'
 
@@ -68,7 +69,7 @@ rescue AxHub::Error => e
 end
 error_thread.join
 error_server.close
-%w[apps identity tenants authz audit gateway data deployments].each { |name| Assert.ok(!AxHub::CONTEXT_ROUTES[name].empty?, "context routes #{name}") }
+%w[apps identity tenants authz audit gateway cost data deployments].each { |name| Assert.ok(!AxHub::CONTEXT_ROUTES[name].empty?, "context routes #{name}") }
 puts 'ruby error metadata and context ok'
 
 non_json_server = TCPServer.new('127.0.0.1', 0)
@@ -99,3 +100,46 @@ end
 non_json_thread.join
 non_json_server.close
 puts 'ruby non-json response handling ok'
+
+wire_server = TCPServer.new('127.0.0.1', 0)
+wire_port = wire_server.addr[1]
+wire_seen = {}
+redirect_target_hit = false
+wire_thread = Thread.new do
+  2.times do
+    socket = wire_server.accept
+    request = socket.readpartial(4096)
+    lines = request.lines
+    method, path = lines.first.split[0, 2]
+    headers = lines.drop(1).take_while { |l| l.strip != '' }.map { |l| k, v = l.split(':', 2); [k.downcase, v&.strip] }.to_h
+    body = request.split("\r\n\r\n", 2)[1] || ''
+    remaining = headers['content-length'].to_i - body.bytesize
+    body += socket.read(remaining) if remaining.positive?
+    case [method, path]
+    when ['POST', '/oauth/token']
+      wire_seen[:content_type] = headers['content-type']
+      wire_seen[:body] = body
+      response = { access_token: 'tok_rb', token_type: 'Bearer', expires_in: 3600 }.to_json
+      socket.write "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: #{response.bytesize}\r\n\r\n#{response}"
+    when ['GET', '/auth/google_oauth2/start']
+      socket.write "HTTP/1.1 302 Found\r\nLocation: /redirect-target\r\nContent-Length: 0\r\n\r\n"
+    when ['GET', '/redirect-target']
+      redirect_target_hit = true
+      socket.write "HTTP/1.1 500 Internal Server Error\r\nContent-Length: 0\r\n\r\n"
+    else
+      socket.write "HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n"
+    end
+    socket.close
+  end
+end
+wire_client = AxHub::Client.new(base_url: "http://127.0.0.1:#{wire_port}", token: 'pat_secret', token_type: :pat)
+wire_got = wire_client.request('authPostOauthToken', body: { grant_type: 'client_credentials', client_id: 'cid' })
+Assert.eq(wire_got['accessToken'], 'tok_rb', 'oauth token response')
+Assert.ok(wire_seen[:content_type].start_with?('application/x-www-form-urlencoded'), 'oauth content type')
+Assert.eq(URI.decode_www_form(wire_seen[:body]).to_h['grant_type'], 'client_credentials', 'oauth form body')
+Assert.ok(!wire_seen[:body].include?('{'), 'oauth body must not be JSON')
+Assert.eq(wire_client.request('authGetAuthGoogleOauth2Start'), { 'status' => 302, 'location' => '/redirect-target' }, 'redirect manual')
+wire_thread.join
+wire_server.close
+Assert.ok(!redirect_target_hit, 'redirect should not be followed')
+puts 'ruby oauth form and redirect policy ok'

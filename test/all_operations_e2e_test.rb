@@ -79,14 +79,14 @@ server_thread = Thread.new do
 end
 
 begin
-  raise "route coverage drift #{AxHub::ROUTES.size}" unless AxHub::ROUTES.size == 177
+  raise "route coverage drift #{AxHub::ROUTES.size}" unless AxHub::ROUTES.size == 189
   raise 'operation metadata drift' unless AxHub::OPERATION_METHODS.size == AxHub::ROUTES.size
 
   route_by_operation = AxHub::ROUTES.to_h { |route| [route['operationId'], route] }
   client = AxHub::Client.new(base_url: "http://127.0.0.1:#{port}", token: 'pat_e2e', token_type: :pat)
   contexts = {
     'apps' => client.apps, 'identity' => client.identity, 'tenants' => client.tenants, 'authz' => client.authz,
-    'audit' => client.audit, 'gateway' => client.gateway, 'data' => client.data, 'deployments' => client.deployments
+    'audit' => client.audit, 'gateway' => client.gateway, 'cost' => client.cost, 'data' => client.data, 'deployments' => client.deployments
   }
 
   AxHub::OPERATION_METHODS.each do |item|

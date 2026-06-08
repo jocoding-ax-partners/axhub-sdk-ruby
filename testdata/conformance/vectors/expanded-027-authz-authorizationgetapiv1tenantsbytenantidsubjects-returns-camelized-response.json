@@ -1,5 +1,5 @@
 {
-  "name": "authz.authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDRevoke returns camelized response",
+  "name": "authz.authorizationGetApiV1TenantsByTenantIDSubjects returns camelized response",
   "client": {
     "tokenType": "jwt",
     "token": "jwt_x",
@@ -8,22 +8,18 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDRevoke",
+    "operationId": "authorizationGetApiV1TenantsByTenantIDSubjects",
     "context": "authz",
-    "method": "authorization_post_api_v1_tenants_by_tenant_id_grants_by_grant_id_revoke",
+    "method": "authorization_get_api_v1_tenants_by_tenant_id_subjects",
     "pathParams": {
-      "tenantID": "tnt_1",
-      "grantID": "grt_1"
+      "tenantID": "tnt_1"
     },
     "query": {},
-    "body": {
-      "name": "Vector Example",
-      "slug": "vector-example"
-    }
+    "body": null
   },
   "httpExpect": {
-    "method": "POST",
-    "path": "/api/v1/tenants/tnt_1/grants/grt_1/revoke",
+    "method": "GET",
+    "path": "/api/v1/tenants/tnt_1/subjects",
     "headersInclude": [
       "x-request-id"
     ],
@@ -34,7 +30,7 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDRevoke",
+      "operation_id": "authorizationGetApiV1TenantsByTenantIDSubjects",
       "context_name": "authz",
       "result_id": "ok_authz",
       "nested_value": {
@@ -44,7 +40,7 @@
   },
   "expect": {
     "ok": {
-      "operationId": "authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDRevoke",
+      "operationId": "authorizationGetApiV1TenantsByTenantIDSubjects",
       "contextName": "authz",
       "resultId": "ok_authz"
     }
