@@ -16,7 +16,7 @@ module AxHub
   end
 
   class Client
-    attr_reader :identity, :tenants, :authz, :audit, :gateway, :data, :deployments
+    attr_reader :identity, :tenants, :authz, :audit, :gateway, :cost, :data, :deployments
     alias __axhub_original_initialize initialize unless method_defined?(:__axhub_original_initialize)
     def initialize(*args, **kwargs)
       __axhub_original_initialize(*args, **kwargs)
@@ -25,6 +25,7 @@ module AxHub
       @authz = OperationClient.new(self)
       @audit = OperationClient.new(self)
       @gateway = OperationClient.new(self)
+      @cost = OperationClient.new(self)
       @data = OperationClient.new(self)
       @deployments = OperationClient.new(self)
     end

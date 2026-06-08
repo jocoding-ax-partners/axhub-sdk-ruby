@@ -1,5 +1,5 @@
 {
-  "name": "authz.authorizationGetApiV1TenantsByTenantIDSubjects returns camelized response",
+  "name": "tenants.tenantsGetApiV1TenantsByTenantIDInviteLinks returns camelized response",
   "client": {
     "tokenType": "pat",
     "token": "pat_x",
@@ -8,9 +8,9 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "authorizationGetApiV1TenantsByTenantIDSubjects",
-    "context": "authz",
-    "method": "authorization_get_api_v1_tenants_by_tenant_id_subjects",
+    "operationId": "tenantsGetApiV1TenantsByTenantIDInviteLinks",
+    "context": "tenants",
+    "method": "tenants_get_api_v1_tenants_by_tenant_id_invite_links",
     "pathParams": {
       "tenantID": "tnt_1"
     },
@@ -19,7 +19,7 @@
   },
   "httpExpect": {
     "method": "GET",
-    "path": "/api/v1/tenants/tnt_1/subjects",
+    "path": "/api/v1/tenants/tnt_1/invite-links",
     "headersInclude": [
       "x-request-id"
     ],
@@ -30,9 +30,9 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "authorizationGetApiV1TenantsByTenantIDSubjects",
-      "context_name": "authz",
-      "result_id": "ok_authz",
+      "operation_id": "tenantsGetApiV1TenantsByTenantIDInviteLinks",
+      "context_name": "tenants",
+      "result_id": "ok_tenants",
       "nested_value": {
         "inner_key": "inner"
       }
@@ -40,9 +40,9 @@
   },
   "expect": {
     "ok": {
-      "operationId": "authorizationGetApiV1TenantsByTenantIDSubjects",
-      "contextName": "authz",
-      "resultId": "ok_authz"
+      "operationId": "tenantsGetApiV1TenantsByTenantIDInviteLinks",
+      "contextName": "tenants",
+      "resultId": "ok_tenants"
     }
   }
 }

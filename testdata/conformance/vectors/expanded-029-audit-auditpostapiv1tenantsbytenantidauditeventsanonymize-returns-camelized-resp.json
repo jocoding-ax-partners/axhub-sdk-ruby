@@ -1,5 +1,5 @@
 {
-  "name": "audit.auditGetApiV1TenantsByTenantIDAuditEventsByEventID returns camelized response",
+  "name": "audit.auditPostApiV1TenantsByTenantIDAuditEventsAnonymize returns camelized response",
   "client": {
     "tokenType": "jwt",
     "token": "jwt_x",
@@ -8,19 +8,21 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "auditGetApiV1TenantsByTenantIDAuditEventsByEventID",
+    "operationId": "auditPostApiV1TenantsByTenantIDAuditEventsAnonymize",
     "context": "audit",
-    "method": "audit_get_api_v1_tenants_by_tenant_id_audit_events_by_event_id",
+    "method": "audit_post_api_v1_tenants_by_tenant_id_audit_events_anonymize",
     "pathParams": {
-      "tenantID": "tnt_1",
-      "eventID": "evt_1"
+      "tenantID": "tnt_1"
     },
     "query": {},
-    "body": null
+    "body": {
+      "name": "Vector Example",
+      "slug": "vector-example"
+    }
   },
   "httpExpect": {
-    "method": "GET",
-    "path": "/api/v1/tenants/tnt_1/audit-events/evt_1",
+    "method": "POST",
+    "path": "/api/v1/tenants/tnt_1/audit-events/anonymize",
     "headersInclude": [
       "x-request-id"
     ],
@@ -31,7 +33,7 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "auditGetApiV1TenantsByTenantIDAuditEventsByEventID",
+      "operation_id": "auditPostApiV1TenantsByTenantIDAuditEventsAnonymize",
       "context_name": "audit",
       "result_id": "ok_audit",
       "nested_value": {
@@ -41,7 +43,7 @@
   },
   "expect": {
     "ok": {
-      "operationId": "auditGetApiV1TenantsByTenantIDAuditEventsByEventID",
+      "operationId": "auditPostApiV1TenantsByTenantIDAuditEventsAnonymize",
       "contextName": "audit",
       "resultId": "ok_audit"
     }

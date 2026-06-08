@@ -1,5 +1,5 @@
 {
-  "name": "deployments.deployGetApiV1AppsByAppIDDeploymentsByDid returns camelized response",
+  "name": "deployments.deployPostApiV1AppsByAppIDDeploymentsByDidCancel returns camelized response",
   "client": {
     "tokenType": "jwt",
     "token": "jwt_x",
@@ -8,19 +8,22 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "deployGetApiV1AppsByAppIDDeploymentsByDid",
+    "operationId": "deployPostApiV1AppsByAppIDDeploymentsByDidCancel",
     "context": "deployments",
-    "method": "deploy_get_api_v1_apps_by_app_id_deployments_by_did",
+    "method": "deploy_post_api_v1_apps_by_app_id_deployments_by_did_cancel",
     "pathParams": {
       "appID": "app_1",
       "did": "dep_1"
     },
     "query": {},
-    "body": null
+    "body": {
+      "name": "Vector Example",
+      "slug": "vector-example"
+    }
   },
   "httpExpect": {
-    "method": "GET",
-    "path": "/api/v1/apps/app_1/deployments/dep_1",
+    "method": "POST",
+    "path": "/api/v1/apps/app_1/deployments/dep_1/cancel",
     "headersInclude": [
       "x-request-id"
     ],
@@ -31,7 +34,7 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "deployGetApiV1AppsByAppIDDeploymentsByDid",
+      "operation_id": "deployPostApiV1AppsByAppIDDeploymentsByDidCancel",
       "context_name": "deployments",
       "result_id": "ok_deployments",
       "nested_value": {
@@ -41,7 +44,7 @@
   },
   "expect": {
     "ok": {
-      "operationId": "deployGetApiV1AppsByAppIDDeploymentsByDid",
+      "operationId": "deployPostApiV1AppsByAppIDDeploymentsByDidCancel",
       "contextName": "deployments",
       "resultId": "ok_deployments"
     }
