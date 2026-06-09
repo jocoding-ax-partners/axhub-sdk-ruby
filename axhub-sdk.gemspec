@@ -21,4 +21,7 @@ Gem::Specification.new do |spec|
     'bug_tracker_uri' => "#{spec.homepage}/issues",
     'rubygems_mfa_required' => 'true'
   }
+
+  spec.add_development_dependency 'minitest', '~> 5.0'
+  spec.add_development_dependency 'rake', '~> 13.0'
 end
