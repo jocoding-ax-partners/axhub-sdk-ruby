@@ -290,6 +290,30 @@ module AxHub
           req.body = JSON.generate(body)
         end
       end
+      _send(req, uri, camelize: true)
+    end
+
+    # Raw-path transport for endpoints with no generated operation-id facade
+    # (the ergonomic data ring: dynamic CRUD + runtime schema discover). `path`
+    # is already fully substituted; `query` keys may be array-valued so repeated
+    # filter params (e.g. `tag=eq.a&tag=eq.b`) serialize via URI.encode_www_form.
+    # Defaults to `camelize: false` to mirror the node data transport: row bodies
+    # and list envelopes (`has_more`/`per_page`) are returned verbatim.
+    def request_raw(method, path, query: {}, body: nil, camelize: false)
+      uri = URI(@base_url + path); uri.query = URI.encode_www_form(query) unless query.nil? || query.empty?
+      req_class = Net::HTTP.const_get(method.to_s.capitalize); req = req_class.new(uri); req['X-Request-ID'] = request_id
+      unless body.nil?
+        req['Content-Type'] = 'application/json'; req.body = JSON.generate(body)
+      end
+      _send(req, uri, camelize: camelize)
+    end
+
+    private
+
+    # Shared auth + send + redirect policy + response/error normalization tail.
+    # `camelize: true` mirrors the operation-id `request` path (snake->camel
+    # rewriting); `camelize: false` returns parsed JSON verbatim (data ring).
+    def _send(req, uri, camelize:)
       if @token
         case @token_type
         when :pat then req['X-Api-Key'] = @token
@@ -319,9 +343,9 @@ module AxHub
         retryable = err.key?('retryable') ? !!err['retryable'] : !!info&.retryable
         raise Error.new(category: err['category'] || info&.category || 'unknown', code: err['code'] || "http_#{res.code}", message: err['message'], status: res.code.to_i, retryable: retryable, request_id: err['request_id'] || err['requestId'])
       end
-      AxHub.camelize(parsed)
+      camelize ? AxHub.camelize(parsed) : parsed
     end
-    private
+
     def request_id
       (Time.now.to_i.to_s + SecureRandom.hex(16))[0, 26]
     end
@@ -352,3 +376,4 @@ module AxHub
 end
 
 require_relative 'axhub_sdk/operations'
+require_relative 'axhub_sdk/data'
