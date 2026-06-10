@@ -93,16 +93,6 @@ module AxHub
         Data._reject_legacy_page_options(after, before, direction, @table_name)
         resolved_page = Data._resolve_offset_page(cursor, page, @table_name)
         per_page = Data._clamp_per_page(page_size.nil? ? limit : page_size)
-        # The AxHub data ring rejects an unfiltered list with HTTP 400
-        # ("최소 1개의 WHERE 필터가 필요해요") as a deliberate mass-scan guard —
-        # confirmed live 2026-06, mirrored by the `axhub data` CLI. Checked after
-        # cursor/page validation so a malformed cursor still surfaces first.
-        if where.nil?
-          raise ValidationError.new(
-            'AxHub data list requires at least one WHERE filter (the backend rejects unfiltered scans). Pass `where:`.',
-            'where_required'
-          )
-        end
         query = Data.serialize_where(where).dup
         query['per_page'] = per_page unless per_page.nil?
         query['page'] = resolved_page if resolved_page != 1
@@ -110,7 +100,7 @@ module AxHub
         query['sort'] = sort if sort && sort != ''
         serialized_select = Data.serialize_select(select)
         query['_select'] = serialized_select unless serialized_select.nil?
-        raw = @client.request_raw('GET', _path, query: query) || {}
+        raw = Data.map_where_required('list') { @client.request_raw('GET', _path, query: query) } || {}
         items = Data.project_rows(raw['items'] || [], select)
         # mirrors node: current_page falls back to the requested page, has_next
         # reads the backend `has_more` flag verbatim, has_prev derives client-side.
@@ -140,14 +130,7 @@ module AxHub
       end
 
       def count(where: nil)
-        # Same mass-scan guard as list() — the backend 400s an unfiltered count.
-        if where.nil?
-          raise ValidationError.new(
-            'AxHub data count requires at least one WHERE filter (the backend rejects unfiltered scans). Pass `where:`.',
-            'where_required'
-          )
-        end
-        raw = @client.request_raw('GET', "#{_path}/_count", query: Data.serialize_where(where)) || {}
+        raw = Data.map_where_required('count') { @client.request_raw('GET', "#{_path}/_count", query: Data.serialize_where(where)) } || {}
         raw['count']
       end
 

@@ -301,14 +301,28 @@ class ListWireTest < Minitest::Test
     assert_equal({ 'id' => '1', 'total' => 9 }, result.items[0])
   end
 
-  def test_list_and_count_require_where_filter
-    # Live backend rejects an unfiltered list/count with HTTP 400 (mass-scan
-    # guard, confirmed 2026-06). The SDK fails fast with where_required before
-    # any network call so the contract is unmissable.
-    tc = table
-    err = assert_raises(ValidationError) { tc.list }
+  def test_filterless_list_passes_for_owner_scoped_tables
+    # Live contract 2026-06: the backend ACCEPTS unfiltered list/count on
+    # owner-scoped tables (rows auto-scope to the caller). The 0.3.0
+    # client-side pre-check wrongly blocked this — filterless calls must
+    # reach the wire.
+    set_response({ 'items' => [{ 'id' => 'mine' }], 'has_more' => false })
+    result = table.list
+    assert_equal 'mine', result.items[0]['id']
+  end
+
+  def test_backend_where_required_400_maps_to_validation_error
+    # Non-owner-scoped tables still get the mass-scan guard — server-side.
+    # The SDK maps that 400 (code=required) onto the same actionable error.
+    set_response(
+      { 'error' => { 'message' => '최소 1개의 WHERE 필터가 필요해요', 'code' => 'required',
+                     'category' => 'validation', 'retryable' => false,
+                     'fields' => [{ 'name' => 'where', 'code' => 'required' }] } },
+      status: 400
+    )
+    err = assert_raises(ValidationError) { table.list }
     assert_equal 'where_required', err.code
-    err2 = assert_raises(ValidationError) { tc.count }
+    err2 = assert_raises(ValidationError) { table.count }
     assert_equal 'where_required', err2.code
   end
 end

@@ -44,5 +44,25 @@ module AxHub
         super(category: 'internal', code: 'scan_limit_exceeded', message: message, status: 0, retryable: false, request_id: request_id)
       end
     end
+    # The backend 400s an unfiltered list/count on NON-owner-scoped tables
+    # ("최소 1개의 WHERE 필터가 필요해요") but ACCEPTS it on owner-scoped tables
+    # (rows auto-scope to the caller) — both confirmed live 2026-06. A client
+    # pre-check cannot tell them apart (0.3.0 regression), so the request goes
+    # through and only the backend 400 is normalized.
+    def self.map_where_required(op)
+      yield
+    rescue StandardError => e
+      code = e.respond_to?(:code) ? e.code : nil
+      status = e.respond_to?(:status) ? e.status : nil
+      if code.to_s == 'required' && status.to_i == 400
+        raise ValidationError.new(
+          "AxHub data #{op} requires at least one WHERE filter on this table " \
+          '(the backend rejects unfiltered scans on non-owner-scoped tables). Pass `where:`.',
+          'where_required'
+        )
+      end
+      raise
+    end
+
   end
 end
