@@ -1,36 +1,36 @@
 {
-  "name": "tenants.tenantsGetApiV1TenantsByTenantIDEmailDomains returns camelized response",
+  "name": "tenants.tenantsGetApiV1InviteLinksByToken returns camelized response",
   "client": {
-    "tokenType": "jwt",
-    "token": "jwt_x",
+    "tokenType": "pat",
+    "token": "pat_x",
     "defaultTenantId": "tnt_1",
     "defaultTenantSlug": "acme"
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "tenantsGetApiV1TenantsByTenantIDEmailDomains",
+    "operationId": "tenantsGetApiV1InviteLinksByToken",
     "context": "tenants",
-    "method": "tenants_get_api_v1_tenants_by_tenant_id_email_domains",
+    "method": "tenants_get_api_v1_invite_links_by_token",
     "pathParams": {
-      "tenantID": "tnt_1"
+      "token": "invite_token_1"
     },
     "query": {},
     "body": null
   },
   "httpExpect": {
     "method": "GET",
-    "path": "/api/v1/tenants/tnt_1/email-domains",
+    "path": "/api/v1/invite-links/invite_token_1",
     "headersInclude": [
       "x-request-id"
     ],
     "headersExact": {
-      "authorization": "Bearer jwt_x"
+      "x-api-key": "pat_x"
     }
   },
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "tenantsGetApiV1TenantsByTenantIDEmailDomains",
+      "operation_id": "tenantsGetApiV1InviteLinksByToken",
       "context_name": "tenants",
       "result_id": "ok_tenants",
       "nested_value": {
@@ -40,7 +40,7 @@
   },
   "expect": {
     "ok": {
-      "operationId": "tenantsGetApiV1TenantsByTenantIDEmailDomains",
+      "operationId": "tenantsGetApiV1InviteLinksByToken",
       "contextName": "tenants",
       "resultId": "ok_tenants"
     }

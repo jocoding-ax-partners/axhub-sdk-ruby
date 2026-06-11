@@ -5,7 +5,7 @@ AX Hub Ruby SDK for `https://api.axhub.ai`. It gives agents a dependency-light c
 ## Install
 
 ```bash
-gem install axhub-sdk -v 0.2.0
+gem install axhub-sdk -v 0.4.0
 ```
 
 Local development:
@@ -51,7 +51,7 @@ app = client.apps.create(
   name: 'Agent Ruby README QA',
   visibility: 'private',
   auth_mode: 'anonymous',
-  resource_tier: 'S',
+  resource_preset: 'S',
   deploy_method: 'docker',
   subdomain: slug
 )

@@ -1,5 +1,5 @@
 {
-  "name": "identity.authGetWellKnownOpenidConfiguration returns camelized response",
+  "name": "apps.appsGetApiV1AdminTemplates returns camelized response",
   "client": {
     "tokenType": "jwt",
     "token": "jwt_x",
@@ -8,16 +8,16 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "authGetWellKnownOpenidConfiguration",
-    "context": "identity",
-    "method": "auth_get_well_known_openid_configuration",
+    "operationId": "appsGetApiV1AdminTemplates",
+    "context": "apps",
+    "method": "apps_get_api_v1_admin_templates",
     "pathParams": {},
     "query": {},
     "body": null
   },
   "httpExpect": {
     "method": "GET",
-    "path": "/.well-known/openid-configuration",
+    "path": "/api/v1/admin/templates",
     "headersInclude": [
       "x-request-id"
     ],
@@ -28,9 +28,9 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "authGetWellKnownOpenidConfiguration",
-      "context_name": "identity",
-      "result_id": "ok_identity",
+      "operation_id": "appsGetApiV1AdminTemplates",
+      "context_name": "apps",
+      "result_id": "ok_apps",
       "nested_value": {
         "inner_key": "inner"
       }
@@ -38,9 +38,9 @@
   },
   "expect": {
     "ok": {
-      "operationId": "authGetWellKnownOpenidConfiguration",
-      "contextName": "identity",
-      "resultId": "ok_identity"
+      "operationId": "appsGetApiV1AdminTemplates",
+      "contextName": "apps",
+      "resultId": "ok_apps"
     }
   }
 }

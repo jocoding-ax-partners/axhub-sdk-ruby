@@ -1,0 +1,48 @@
+{
+  "name": "deployments.deployGetApiV1AppsByAppIDDeployments returns camelized response",
+  "client": {
+    "tokenType": "pat",
+    "token": "pat_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "deployGetApiV1AppsByAppIDDeployments",
+    "context": "deployments",
+    "method": "deploy_get_api_v1_apps_by_app_id_deployments",
+    "pathParams": {
+      "appID": "app_1"
+    },
+    "query": {},
+    "body": null
+  },
+  "httpExpect": {
+    "method": "GET",
+    "path": "/api/v1/apps/app_1/deployments",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "x-api-key": "pat_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "deployGetApiV1AppsByAppIDDeployments",
+      "context_name": "deployments",
+      "result_id": "ok_deployments",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "deployGetApiV1AppsByAppIDDeployments",
+      "contextName": "deployments",
+      "resultId": "ok_deployments"
+    }
+  }
+}

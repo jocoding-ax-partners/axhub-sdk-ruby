@@ -17,7 +17,7 @@ TENANT_SLUG = ENV.fetch('AXHUB_LIVE_TENANT_SLUG', 'test')
 BASE_URL = ENV.fetch('AXHUB_LIVE_BASE_URL', 'https://api.axhub.ai')
 DEAD_UUID = '00000000-0000-4000-8000-00000000dead'
 PATH_PARAM_RE = /\{([^}]+)\}/
-LIVE_CALL_TIMEOUT = Float(ENV.fetch('AXHUB_LIVE_CALL_TIMEOUT_SECONDS', '1.5'))
+LIVE_CALL_TIMEOUT = Float(ENV.fetch('AXHUB_LIVE_CALL_TIMEOUT_SECONDS', '15'))
 
 HIGH_RISK_TENANT_OPS = {
   'tenantsDeleteApiV1TenantsByTenantID' => true,
@@ -75,7 +75,7 @@ def body_for(route)
   { sdk_e2e: true, operation_id: route['operationId'] }
 end
 
-raise "route coverage drift #{AxHub::ROUTES.size}" unless AxHub::ROUTES.size == 189
+raise "route coverage drift #{AxHub::ROUTES.size}" unless AxHub::ROUTES.size == 185
 raise 'operation metadata drift' unless AxHub::OPERATION_METHODS.size == AxHub::ROUTES.size
 
 client = AxHub::Client.new(base_url: BASE_URL, token: TOKEN, token_type: :pat, default_tenant_id: TENANT_ID, default_tenant_slug: TENANT_SLUG, timeout_seconds: LIVE_CALL_TIMEOUT)
@@ -160,7 +160,7 @@ if ENV['AXHUB_LIVE_RESULT_PATH']
   end
 end
 
-raise "total drift #{summary[:total]}" unless summary[:total] == 189
+raise "total drift #{summary[:total]}" unless summary[:total] == 185
 expected_destructive = AxHub::ROUTES.count { |route| route['method'] != 'GET' }
 raise "destructive method count drift #{summary[:destructive]} != #{expected_destructive}" unless summary[:destructive] == expected_destructive
 raise "exceptions: #{summary[:exceptions].inspect}" unless summary[:exceptions].empty?

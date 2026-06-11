@@ -1,8 +1,8 @@
 {
   "name": "audit.auditGetApiV1TenantsByTenantIDAuditEventsIntegrityCheck returns camelized response",
   "client": {
-    "tokenType": "pat",
-    "token": "pat_x",
+    "tokenType": "jwt",
+    "token": "jwt_x",
     "defaultTenantId": "tnt_1",
     "defaultTenantSlug": "acme"
   },
@@ -24,7 +24,7 @@
       "x-request-id"
     ],
     "headersExact": {
-      "x-api-key": "pat_x"
+      "authorization": "Bearer jwt_x"
     }
   },
   "mockResponse": {

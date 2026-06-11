@@ -1,0 +1,46 @@
+{
+  "name": "identity.authGetWellKnownOpenidConfiguration returns camelized response",
+  "client": {
+    "tokenType": "pat",
+    "token": "pat_x",
+    "defaultTenantId": "tnt_1",
+    "defaultTenantSlug": "acme"
+  },
+  "call": {
+    "symbol": "sdk.operation",
+    "operationId": "authGetWellKnownOpenidConfiguration",
+    "context": "identity",
+    "method": "auth_get_well_known_openid_configuration",
+    "pathParams": {},
+    "query": {},
+    "body": null
+  },
+  "httpExpect": {
+    "method": "GET",
+    "path": "/.well-known/openid-configuration",
+    "headersInclude": [
+      "x-request-id"
+    ],
+    "headersExact": {
+      "x-api-key": "pat_x"
+    }
+  },
+  "mockResponse": {
+    "status": 200,
+    "body": {
+      "operation_id": "authGetWellKnownOpenidConfiguration",
+      "context_name": "identity",
+      "result_id": "ok_identity",
+      "nested_value": {
+        "inner_key": "inner"
+      }
+    }
+  },
+  "expect": {
+    "ok": {
+      "operationId": "authGetWellKnownOpenidConfiguration",
+      "contextName": "identity",
+      "resultId": "ok_identity"
+    }
+  }
+}

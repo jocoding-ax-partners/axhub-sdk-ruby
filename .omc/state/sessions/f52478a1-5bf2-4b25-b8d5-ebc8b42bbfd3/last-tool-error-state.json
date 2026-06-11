@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"AXHUB_TOKEN=\\\"$(cat /tmp/pat_token.txt)\\\" ruby -Ilib -e '\\nrequire \\\"axhub_sdk\\\"\\nTID = \\\"cc1e58f1-8e46-4ac7-96c1-190c4cdd5b70\\\"\\nc = AxHub::Client.new(token: ENV[\\\"AXHUB_TOKEN\\\"], token_t...",
+  "error": "Exit code 1\n/Users/wongil/Desktop/work/jocoding/sdk/axhub-sdk-ruby/lib/axhub_sdk.rb:368:in 'AxHub::AppsClient#create': wrong number of arguments (given 1, expected 0) (ArgumentError)\n\n    caller: -e:5\n    callee: /Users/wongil/Desktop/work/jocoding/sdk/axhub-sdk-ruby/lib/axhub_sdk.rb:368\n    |     def create(**body)\n              ^^^^^^\n\tfrom -e:5:in '<main>'",
+  "timestamp": "2026-06-11T12:12:19.168Z",
+  "retry_count": 1
+}

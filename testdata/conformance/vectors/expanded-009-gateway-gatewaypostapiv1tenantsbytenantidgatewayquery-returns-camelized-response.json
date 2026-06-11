@@ -1,5 +1,5 @@
 {
-  "name": "gateway.gatewayGetApiV1CatalogKinds returns camelized response",
+  "name": "gateway.gatewayPostApiV1TenantsByTenantIDGatewayQuery returns camelized response",
   "client": {
     "tokenType": "jwt",
     "token": "jwt_x",
@@ -8,16 +8,21 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "gatewayGetApiV1CatalogKinds",
+    "operationId": "gatewayPostApiV1TenantsByTenantIDGatewayQuery",
     "context": "gateway",
-    "method": "gateway_get_api_v1_catalog_kinds",
-    "pathParams": {},
+    "method": "gateway_post_api_v1_tenants_by_tenant_id_gateway_query",
+    "pathParams": {
+      "tenantID": "tnt_1"
+    },
     "query": {},
-    "body": null
+    "body": {
+      "name": "Vector Example",
+      "slug": "vector-example"
+    }
   },
   "httpExpect": {
-    "method": "GET",
-    "path": "/api/v1/catalog/kinds",
+    "method": "POST",
+    "path": "/api/v1/tenants/tnt_1/gateway/query",
     "headersInclude": [
       "x-request-id"
     ],
@@ -28,7 +33,7 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "gatewayGetApiV1CatalogKinds",
+      "operation_id": "gatewayPostApiV1TenantsByTenantIDGatewayQuery",
       "context_name": "gateway",
       "result_id": "ok_gateway",
       "nested_value": {
@@ -38,7 +43,7 @@
   },
   "expect": {
     "ok": {
-      "operationId": "gatewayGetApiV1CatalogKinds",
+      "operationId": "gatewayPostApiV1TenantsByTenantIDGatewayQuery",
       "contextName": "gateway",
       "resultId": "ok_gateway"
     }

@@ -1,5 +1,5 @@
 {
-  "name": "apps.appsGetApiV1AdminTemplates returns camelized response",
+  "name": "apps.appsPostApiV1AdminTemplates returns camelized response",
   "client": {
     "tokenType": "pat",
     "token": "pat_x",
@@ -8,15 +8,18 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "appsGetApiV1AdminTemplates",
+    "operationId": "appsPostApiV1AdminTemplates",
     "context": "apps",
-    "method": "apps_get_api_v1_admin_templates",
+    "method": "apps_post_api_v1_admin_templates",
     "pathParams": {},
     "query": {},
-    "body": null
+    "body": {
+      "name": "Vector Example",
+      "slug": "vector-example"
+    }
   },
   "httpExpect": {
-    "method": "GET",
+    "method": "POST",
     "path": "/api/v1/admin/templates",
     "headersInclude": [
       "x-request-id"
@@ -28,7 +31,7 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "appsGetApiV1AdminTemplates",
+      "operation_id": "appsPostApiV1AdminTemplates",
       "context_name": "apps",
       "result_id": "ok_apps",
       "nested_value": {
@@ -38,7 +41,7 @@
   },
   "expect": {
     "ok": {
-      "operationId": "appsGetApiV1AdminTemplates",
+      "operationId": "appsPostApiV1AdminTemplates",
       "contextName": "apps",
       "resultId": "ok_apps"
     }
