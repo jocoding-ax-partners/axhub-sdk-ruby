@@ -79,7 +79,7 @@ server_thread = Thread.new do
 end
 
 begin
-  raise "route coverage drift #{AxHub::ROUTES.size}" unless AxHub::ROUTES.size == 189
+  raise "route coverage drift #{AxHub::ROUTES.size}" unless AxHub::ROUTES.size == 185
   raise 'operation metadata drift' unless AxHub::OPERATION_METHODS.size == AxHub::ROUTES.size
 
   route_by_operation = AxHub::ROUTES.to_h { |route| [route['operationId'], route] }

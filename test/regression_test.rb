@@ -43,8 +43,8 @@ begin
 rescue AxHub::Error => e
   Assert.eq([e.category, e.code], ['tenant_id_required', 'tenant_id_required'], 'tenant error')
 end
-Assert.eq(AxHub::ROUTES.size, 189, 'route coverage')
-Assert.eq(AxHub::ERROR_CODES.size, 43, 'error coverage')
+Assert.eq(AxHub::ROUTES.size, 185, 'route coverage')
+Assert.eq(AxHub::ERROR_CODES.size, 58, 'error coverage')
 Assert.eq(AxHub::ERROR_CODES['slug_taken'].category, 'conflict', 'slug_taken category')
 puts 'ruby regression ok'
 

@@ -1,5 +1,5 @@
 {
-  "name": "authz.authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDGrant returns camelized response",
+  "name": "authz.authorizationDeleteApiV1TenantsByTenantIDGrantsByGrantID returns camelized response",
   "client": {
     "tokenType": "jwt",
     "token": "jwt_x",
@@ -8,22 +8,19 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDGrant",
+    "operationId": "authorizationDeleteApiV1TenantsByTenantIDGrantsByGrantID",
     "context": "authz",
-    "method": "authorization_post_api_v1_tenants_by_tenant_id_grants_by_grant_id_grant",
+    "method": "authorization_delete_api_v1_tenants_by_tenant_id_grants_by_grant_id",
     "pathParams": {
       "tenantID": "tnt_1",
       "grantID": "grt_1"
     },
     "query": {},
-    "body": {
-      "name": "Vector Example",
-      "slug": "vector-example"
-    }
+    "body": null
   },
   "httpExpect": {
-    "method": "POST",
-    "path": "/api/v1/tenants/tnt_1/grants/grt_1/grant",
+    "method": "DELETE",
+    "path": "/api/v1/tenants/tnt_1/grants/grt_1",
     "headersInclude": [
       "x-request-id"
     ],
@@ -34,7 +31,7 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDGrant",
+      "operation_id": "authorizationDeleteApiV1TenantsByTenantIDGrantsByGrantID",
       "context_name": "authz",
       "result_id": "ok_authz",
       "nested_value": {
@@ -44,7 +41,7 @@
   },
   "expect": {
     "ok": {
-      "operationId": "authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDGrant",
+      "operationId": "authorizationDeleteApiV1TenantsByTenantIDGrantsByGrantID",
       "contextName": "authz",
       "resultId": "ok_authz"
     }

@@ -1,5 +1,5 @@
 {
-  "name": "gateway.gatewayGetApiV1Engines returns camelized response",
+  "name": "gateway.configGetConfigPublic returns camelized response",
   "client": {
     "tokenType": "jwt",
     "token": "jwt_x",
@@ -8,16 +8,16 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "gatewayGetApiV1Engines",
+    "operationId": "configGetConfigPublic",
     "context": "gateway",
-    "method": "gateway_get_api_v1_engines",
+    "method": "config_get_config_public",
     "pathParams": {},
     "query": {},
     "body": null
   },
   "httpExpect": {
     "method": "GET",
-    "path": "/api/v1/engines",
+    "path": "/config/public",
     "headersInclude": [
       "x-request-id"
     ],
@@ -28,7 +28,7 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "gatewayGetApiV1Engines",
+      "operation_id": "configGetConfigPublic",
       "context_name": "gateway",
       "result_id": "ok_gateway",
       "nested_value": {
@@ -38,7 +38,7 @@
   },
   "expect": {
     "ok": {
-      "operationId": "gatewayGetApiV1Engines",
+      "operationId": "configGetConfigPublic",
       "contextName": "gateway",
       "resultId": "ok_gateway"
     }

@@ -1,5 +1,5 @@
 {
-  "name": "deployments.deployPostApiV1AppsByAppIDDeployments returns camelized response",
+  "name": "authz.authorizationPostApiV1TenantsByTenantIDGrants returns camelized response",
   "client": {
     "tokenType": "pat",
     "token": "pat_x",
@@ -8,11 +8,11 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "deployPostApiV1AppsByAppIDDeployments",
-    "context": "deployments",
-    "method": "deploy_post_api_v1_apps_by_app_id_deployments",
+    "operationId": "authorizationPostApiV1TenantsByTenantIDGrants",
+    "context": "authz",
+    "method": "authorization_post_api_v1_tenants_by_tenant_id_grants",
     "pathParams": {
-      "appID": "app_1"
+      "tenantID": "tnt_1"
     },
     "query": {},
     "body": {
@@ -22,7 +22,7 @@
   },
   "httpExpect": {
     "method": "POST",
-    "path": "/api/v1/apps/app_1/deployments",
+    "path": "/api/v1/tenants/tnt_1/grants",
     "headersInclude": [
       "x-request-id"
     ],
@@ -33,9 +33,9 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "deployPostApiV1AppsByAppIDDeployments",
-      "context_name": "deployments",
-      "result_id": "ok_deployments",
+      "operation_id": "authorizationPostApiV1TenantsByTenantIDGrants",
+      "context_name": "authz",
+      "result_id": "ok_authz",
       "nested_value": {
         "inner_key": "inner"
       }
@@ -43,9 +43,9 @@
   },
   "expect": {
     "ok": {
-      "operationId": "deployPostApiV1AppsByAppIDDeployments",
-      "contextName": "deployments",
-      "resultId": "ok_deployments"
+      "operationId": "authorizationPostApiV1TenantsByTenantIDGrants",
+      "contextName": "authz",
+      "resultId": "ok_authz"
     }
   }
 }

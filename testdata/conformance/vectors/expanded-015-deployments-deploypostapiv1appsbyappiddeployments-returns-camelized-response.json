@@ -1,5 +1,5 @@
 {
-  "name": "deployments.deployGetApiV1AppsByAppIDDeployments returns camelized response",
+  "name": "deployments.deployPostApiV1AppsByAppIDDeployments returns camelized response",
   "client": {
     "tokenType": "jwt",
     "token": "jwt_x",
@@ -8,17 +8,20 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "deployGetApiV1AppsByAppIDDeployments",
+    "operationId": "deployPostApiV1AppsByAppIDDeployments",
     "context": "deployments",
-    "method": "deploy_get_api_v1_apps_by_app_id_deployments",
+    "method": "deploy_post_api_v1_apps_by_app_id_deployments",
     "pathParams": {
       "appID": "app_1"
     },
     "query": {},
-    "body": null
+    "body": {
+      "name": "Vector Example",
+      "slug": "vector-example"
+    }
   },
   "httpExpect": {
-    "method": "GET",
+    "method": "POST",
     "path": "/api/v1/apps/app_1/deployments",
     "headersInclude": [
       "x-request-id"
@@ -30,7 +33,7 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "deployGetApiV1AppsByAppIDDeployments",
+      "operation_id": "deployPostApiV1AppsByAppIDDeployments",
       "context_name": "deployments",
       "result_id": "ok_deployments",
       "nested_value": {
@@ -40,7 +43,7 @@
   },
   "expect": {
     "ok": {
-      "operationId": "deployGetApiV1AppsByAppIDDeployments",
+      "operationId": "deployPostApiV1AppsByAppIDDeployments",
       "contextName": "deployments",
       "resultId": "ok_deployments"
     }

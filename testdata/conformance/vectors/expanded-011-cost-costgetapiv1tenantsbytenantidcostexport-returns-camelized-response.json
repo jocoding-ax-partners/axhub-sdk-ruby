@@ -1,5 +1,5 @@
 {
-  "name": "tenants.tenantsGetApiV1InviteLinksByToken returns camelized response",
+  "name": "cost.costGetApiV1TenantsByTenantIDCostExport returns camelized response",
   "client": {
     "tokenType": "jwt",
     "token": "jwt_x",
@@ -8,18 +8,18 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "tenantsGetApiV1InviteLinksByToken",
-    "context": "tenants",
-    "method": "tenants_get_api_v1_invite_links_by_token",
+    "operationId": "costGetApiV1TenantsByTenantIDCostExport",
+    "context": "cost",
+    "method": "cost_get_api_v1_tenants_by_tenant_id_cost_export",
     "pathParams": {
-      "token": "invite_token_1"
+      "tenantID": "tnt_1"
     },
     "query": {},
     "body": null
   },
   "httpExpect": {
     "method": "GET",
-    "path": "/api/v1/invite-links/invite_token_1",
+    "path": "/api/v1/tenants/tnt_1/cost/export",
     "headersInclude": [
       "x-request-id"
     ],
@@ -30,9 +30,9 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "tenantsGetApiV1InviteLinksByToken",
-      "context_name": "tenants",
-      "result_id": "ok_tenants",
+      "operation_id": "costGetApiV1TenantsByTenantIDCostExport",
+      "context_name": "cost",
+      "result_id": "ok_cost",
       "nested_value": {
         "inner_key": "inner"
       }
@@ -40,9 +40,9 @@
   },
   "expect": {
     "ok": {
-      "operationId": "tenantsGetApiV1InviteLinksByToken",
-      "contextName": "tenants",
-      "resultId": "ok_tenants"
+      "operationId": "costGetApiV1TenantsByTenantIDCostExport",
+      "contextName": "cost",
+      "resultId": "ok_cost"
     }
   }
 }

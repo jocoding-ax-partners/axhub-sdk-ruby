@@ -1,5 +1,5 @@
 {
-  "name": "gateway.configGetConfigPublic returns camelized response",
+  "name": "gateway.gatewayGetApiV1TenantsByTenantIDConnectors returns camelized response",
   "client": {
     "tokenType": "pat",
     "token": "pat_x",
@@ -8,16 +8,18 @@
   },
   "call": {
     "symbol": "sdk.operation",
-    "operationId": "configGetConfigPublic",
+    "operationId": "gatewayGetApiV1TenantsByTenantIDConnectors",
     "context": "gateway",
-    "method": "config_get_config_public",
-    "pathParams": {},
+    "method": "gateway_get_api_v1_tenants_by_tenant_id_connectors",
+    "pathParams": {
+      "tenantID": "tnt_1"
+    },
     "query": {},
     "body": null
   },
   "httpExpect": {
     "method": "GET",
-    "path": "/config/public",
+    "path": "/api/v1/tenants/tnt_1/connectors",
     "headersInclude": [
       "x-request-id"
     ],
@@ -28,7 +30,7 @@
   "mockResponse": {
     "status": 200,
     "body": {
-      "operation_id": "configGetConfigPublic",
+      "operation_id": "gatewayGetApiV1TenantsByTenantIDConnectors",
       "context_name": "gateway",
       "result_id": "ok_gateway",
       "nested_value": {
@@ -38,7 +40,7 @@
   },
   "expect": {
     "ok": {
-      "operationId": "configGetConfigPublic",
+      "operationId": "gatewayGetApiV1TenantsByTenantIDConnectors",
       "contextName": "gateway",
       "resultId": "ok_gateway"
     }
