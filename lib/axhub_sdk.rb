@@ -282,7 +282,7 @@ module AxHub
   ].freeze
   class Client
     attr_reader :base_url, :apps
-    def initialize(base_url: DEFAULT_BASE_URL, token: nil, token_type: nil, default_tenant_id: nil, default_tenant_slug: nil, timeout_seconds: 10)
+    def initialize(base_url: DEFAULT_BASE_URL, token: nil, token_type: nil, default_tenant_id: nil, default_tenant_slug: nil, timeout_seconds: 30)
       @base_url = base_url.sub(%r{/$}, ''); @token = token; @token_type = token_type&.to_sym; @default_tenant_id = default_tenant_id; @default_tenant_slug = default_tenant_slug; @timeout_seconds = timeout_seconds; @apps = AppsClient.new(self)
     end
     def redacted_token
