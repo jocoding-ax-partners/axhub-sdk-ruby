@@ -5,7 +5,7 @@ AX Hub Ruby SDK for `https://api.axhub.ai`. It gives agents a dependency-light c
 ## Install
 
 ```bash
-gem install axhub-sdk -v 0.3.1
+gem install axhub-sdk -v 0.4.0
 ```
 
 Local development:
